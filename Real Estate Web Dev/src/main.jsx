@@ -10,11 +10,13 @@ import SignUp from './pages/SignUp.jsx'
 import Profile from './pages/Profile.jsx'
 import ForgetPass from './pages/ForgetPass';
 import Offers from './pages/Offers';
+import Header from './components/Header.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <>
    <Router>
+   <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/signin" element={<SignIn/>}/>
