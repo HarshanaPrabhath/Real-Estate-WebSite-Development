@@ -3,15 +3,20 @@ import { GoEyeClosed } from "react-icons/go";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router";
 import OAuth from "../components/OAuth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { db } from "../Firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function SignUp() {
   const [showPass, setShowPass] = useState(false);
 
   const [formData, setFormData] = useState({
-    fullName:"",
+    fullName: "",
     email: "",
     password: "",
   });
+
+  const { fullName, email, password } = formData;
 
   function onChange(e) {
     const { name, value } = e.target;
@@ -21,7 +26,40 @@ function SignUp() {
     }));
   }
 
-  const { fullName,email, password } = formData;
+  async function onSubmit(e) {
+    e.preventDefault();
+
+    // Validation
+    if (!fullName || !email || !password) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    const auth = getAuth();
+
+    try {
+      // Create user
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Update user profile
+      await updateProfile(user, {
+        displayName: fullName,
+      });
+
+      // Save user info to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        fullName: fullName,
+        email: email,
+        timestamp: new Date(),
+      });
+
+      console.log("User signed up successfully:", user);
+    } catch (error) {
+      console.error("Error during sign-up:", error.message);
+      alert("Error: " + error.message);
+    }
+  }
 
   return (
     <section>
@@ -36,8 +74,8 @@ function SignUp() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
-            <label htmlFor="email">FullName</label>
+          <form onSubmit={onSubmit}>
+            <label htmlFor="fullName">Full Name</label>
             <input
               className="w-full p-2 mb-4 border border-gray-300 rounded"
               type="text"
@@ -45,7 +83,7 @@ function SignUp() {
               name="fullName"
               value={fullName}
               onChange={onChange}
-              placeholder="Enter your FullName"
+              placeholder="Enter your Full Name"
             />
             <label htmlFor="email">Email</label>
             <input
@@ -78,27 +116,37 @@ function SignUp() {
               </button>
             </div>
 
-            {/* forget password section */}
             <div className="flex justify-between">
               <div>
-                Have a Account? <Link className="text-red-500 hover:text-blue-600 cursor-pointer transition duration-200" to="/signin">Sign In</Link> 
+                Have an Account?{" "}
+                <Link
+                  className="text-red-500 hover:text-blue-600 cursor-pointer transition duration-200"
+                  to="/signin"
+                >
+                  Sign In
+                </Link>
               </div>
               <div>
-              <Link className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200" to="/forget-password">Forget Password</Link>
+                <Link
+                  className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200"
+                  to="/forget-password"
+                >
+                  Forget Password
+                </Link>
               </div>
             </div>
-            {/* submit button*/}
-          <button
+
+            <button
               type="submit"
               className="w-full bg-blue-500 text-white p-3 rounded mt-4 hover:bg-blue-600 active:bg-blue-800"
             >
-              Sign In
+              Sign Up
             </button>
 
             <div className="flex items-center my-4 before:border-t before:flex-1 after:border-t after:flex-1">
-            <p className="mx-4">OR</p>
+              <p className="mx-4">OR</p>
             </div>
-            <OAuth/>
+            <OAuth />
           </form>
         </div>
       </div>

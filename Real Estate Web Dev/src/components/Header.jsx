@@ -15,16 +15,16 @@ function Header() {
     <div className='bg-teal-600 shadow-sm sticky top-0 '>
       <header className="flex justify-between items-center px-3 mx-auto max-w-6xl ">
         <div className='text-white cursor-pointer'>
-            <p onClick={()=>navigate("/")} className='text-lg'>Land Business</p>
+            <p onClick={()=>navigate("/")} className='text-2xl transition-transform duration-300 hover:scale-110 tracking-widest'>LAND BUSINESS</p>
         </div>
         <div>
            <ul className='flex space-x-10'>
-            <li onClick={()=>navigate("/")}className={`text-lg text-gray-200 border-b-[3px] border-b-transparent py-3 cursor-pointer
-                ${pathMatchRoute("/") && "text-white border-b-white"} `}>Home</li>
-            <li onClick={()=>navigate('/offers')}className={`text-lg text-gray-200 border-b-[3px] border-b-transparent py-3 cursor-pointer
-                ${pathMatchRoute("/offers") && "text-white border-b-white"} `}>Offers</li>
-            <li onClick={()=>navigate('/signin')} className={`text-lg text-gray-200 border-b-[3px] border-b-transparent py-3 cursor-pointer
-                ${pathMatchRoute("/signin") && "text-white border-b-white"} `}>Sign in</li>
+            <li onClick={()=>navigate("/")}className={`text-lg text-white border-b-[3px] border-b-transparent py-3 cursor-pointer transition-transform duration-300 hover:scale-110
+                ${pathMatchRoute("/") && "border-b-white"} `}>Home</li>
+            <li onClick={()=>navigate('/offers')}className={`text-lg text-white border-b-[3px] border-b-transparent py-3 cursor-pointer transition-transform duration-300 hover:scale-110
+                ${pathMatchRoute("/offers") && "border-b-white"} `}>Offers</li>
+            <li onClick={()=>navigate('/signin')} className={`text-lg text-white border-b-[3px] border-b-transparent py-3 cursor-pointer transition-transform duration-300 hover:scale-110
+                ${pathMatchRoute("/signin") && "border-b-white"} `}>Sign in</li>
            </ul>
         </div>
       </header>

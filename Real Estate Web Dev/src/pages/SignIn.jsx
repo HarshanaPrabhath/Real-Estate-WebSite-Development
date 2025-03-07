@@ -73,7 +73,7 @@ function SignIn() {
                 Don't have and account? <Link className="text-red-500 hover:text-blue-600 cursor-pointer transition duration-200" to="/signup">Register</Link> 
               </div>
               <div>
-              <Link className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200" to="/ForgetPass">Forget Password</Link>
+              <Link className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200" to="/forgetpassword">Forget Password</Link>
               </div>
             </div>
             {/* submit button*/}

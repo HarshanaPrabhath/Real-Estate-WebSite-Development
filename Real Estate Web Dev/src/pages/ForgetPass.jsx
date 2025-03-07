@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import SignIn from './SignIn';
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ function ForgetPassword() {
 
   return (
     <section>
-      <h1 className="text-center text-3xl font-bold mt-6">Sign In</h1>
+      <h1 className="text-center text-3xl font-bold mt-6">Reset Your Password</h1>
 
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[67%] lg:w-[50%] mb-6 md:mb-12">
@@ -34,7 +35,6 @@ function ForgetPassword() {
               placeholder="Enter your email"
             />
 
-            <label htmlFor="password">Password</label>
 
             {/* forget password section */}
             <div className="flex justify-between">
@@ -50,9 +50,9 @@ function ForgetPassword() {
               <div>
                 <Link
                   className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200"
-                  to="/forgot-password"
+                  to="/signin"
                 >
-                  Forgot Password?
+                  Sign In with Password
                 </Link>
               </div>
             </div>
