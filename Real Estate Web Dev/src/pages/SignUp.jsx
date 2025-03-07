@@ -6,9 +6,13 @@ import OAuth from "../components/OAuth";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from "../Firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [showPass, setShowPass] = useState(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -31,7 +35,7 @@ function SignUp() {
 
     // Validation
     if (!fullName || !email || !password) {
-      alert("Please fill out all fields.");
+      toast.error("Please fill out all fields.");
       return;
     }
 
@@ -52,12 +56,17 @@ function SignUp() {
         fullName: fullName,
         email: email,
         timestamp: new Date(),
+        
       });
 
-      console.log("User signed up successfully:", user);
+      
+      navigate("/")
+      toast.success("Sign Up Successfully!")
+      // console.log("User signed up successfully:", user);
     } catch (error) {
-      console.error("Error during sign-up:", error.message);
-      alert("Error: " + error.message);
+      // console.error("Error during sign-up:", error.message);
+      // alert("Error: " + error.message);
+      toast.error("Sign Up Failed!")
     }
   }
 
