@@ -3,10 +3,14 @@ import { GoEyeClosed } from "react-icons/go";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router";
 import OAuth from "../components/OAuth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function SignIn() {
-  const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
 
+  const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,6 +25,26 @@ function SignIn() {
   }
 
   const { email, password } = formData;
+
+  //  with sign in button clicked
+  async function onClickSignIn(e) {
+    e.preventDefault()
+    try {
+      const auth = getAuth();
+      // console.log("auth", auth)
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("please enter correct email address and password");
+    }
+
+  }
 
   return (
     <section>
@@ -70,14 +94,26 @@ function SignIn() {
             {/* forget password section */}
             <div className="flex justify-between">
               <div>
-                Don't have and account? <Link className="text-red-500 hover:text-blue-600 cursor-pointer transition duration-200" to="/signup">Register</Link> 
+                Don't have and account?{" "}
+                <Link
+                  className="text-red-500 hover:text-blue-600 cursor-pointer transition duration-200"
+                  to="/signup"
+                >
+                  Register
+                </Link>
               </div>
               <div>
-              <Link className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200" to="/forgetpassword">Forget Password</Link>
+                <Link
+                  className="text-blue-600 hover:text-blue-600 cursor-pointer transition duration-200"
+                  to="/forgetpassword"
+                >
+                  Forget Password
+                </Link>
               </div>
             </div>
             {/* submit button*/}
             <button
+              onClick={onClickSignIn}
               type="submit"
               className="w-full bg-blue-500 text-white p-3 rounded mt-4 hover:bg-blue-600 active:bg-blue-800"
             >
@@ -85,9 +121,9 @@ function SignIn() {
             </button>
 
             <div className="flex items-center my-4 before:border-t before:flex-1 after:border-t after:flex-1">
-            <p className="mx-4">OR</p>
+              <p className="mx-4">OR</p>
             </div>
-            <OAuth/>
+            <OAuth />
           </form>
         </div>
       </div>
