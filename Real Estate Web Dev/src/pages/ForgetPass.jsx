@@ -2,12 +2,27 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import SignIn from './SignIn';
+import { TbReceiptYuan } from "react-icons/tb";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { toast } from "react-toastify";
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");
 
   function onChange(e) {
     setEmail(e.target.value);
+  }
+
+  async function onClickReset(e){
+    e.preventDefault()
+    try {
+      const auth = getAuth()
+      // await sendPasswordResetEmail(auth,email)
+      // toast.success("Email was Sent")
+     
+    } catch (error) {
+      toast.error("Not Found Account")
+    }
   }
 
   return (
@@ -59,6 +74,7 @@ function ForgetPassword() {
             {/* submit button */}
             <button
               type="submit"
+              onClick={onClickReset}
               className="w-full bg-blue-500 text-white p-3 rounded mt-4 hover:bg-blue-600 active:bg-blue-800"
             >
              Send Reset Password

@@ -3,7 +3,11 @@ import { GoEyeClosed } from "react-icons/go";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router";
 import OAuth from "../components/OAuth";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { db } from "../Firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router";
@@ -43,7 +47,11 @@ function SignUp() {
 
     try {
       // Create user
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Update user profile
@@ -56,17 +64,15 @@ function SignUp() {
         fullName: fullName,
         email: email,
         timestamp: new Date(),
-        
       });
 
-      
-      navigate("/")
-      toast.success("Sign Up Successfully!")
+      navigate("/");
+      toast.success("Sign Up Successfully!");
       // console.log("User signed up successfully:", user);
     } catch (error) {
       // console.error("Error during sign-up:", error.message);
       // alert("Error: " + error.message);
-      toast.error("Sign Up Failed!")
+      toast.error("Sign Up Failed!");
     }
   }
 

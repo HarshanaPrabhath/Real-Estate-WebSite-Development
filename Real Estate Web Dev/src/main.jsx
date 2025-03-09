@@ -11,6 +11,7 @@ import ForgetPass from "./pages/ForgetPass";
 import Offers from "./pages/Offers";
 import Header from "./components/Header.jsx";
 import { ToastContainer } from "react-toastify";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 
 createRoot(document.getElementById("root")).render(
@@ -21,7 +22,13 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route path="/profile" element={<PrivateRoute/>}>
+          {/* Define child routes */}
+          <Route path="/profile" element={<Profile/>} />
+         
+        </Route>
+
         <Route path="/offers" element={<Offers />} />
         <Route path="/forgetpassword" element={<ForgetPass />} />
       </Routes>
