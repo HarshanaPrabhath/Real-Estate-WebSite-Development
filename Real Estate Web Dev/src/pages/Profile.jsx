@@ -1,54 +1,81 @@
-import { getAuth } from "firebase/auth";
-import React, {useEffect, useState } from "react";
+import { getAuth, updateProfile } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function Profile() {
-  // for navigate
   const navigate = useNavigate();
-
-  // getting details from firebase
   const auth = getAuth();
-  const userName = auth.currentUser.displayName;
-  const userEmail = auth.currentUser.email;
 
+  const [changeUserDetail, setChangeUserDetail] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
   });
 
-  //if any changes done with log in or log out this will run, because I pass auth in array
+  // OnChange handler for form inputs
+  function onChange(e) {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value, // Fix for incorrect state update
+    }));
+  }
+
+  // Update state with Firebase user details
   useEffect(() => {
     if (auth.currentUser) {
       setFormData({
-        name: userName,
-        email: userEmail,
+        name: auth.currentUser.displayName || "",
+        email: auth.currentUser.email || "",
       });
     }
   }, [auth]);
 
-  // Destructuring Data ex: const name = formData.name; const email = formData.email;
-  // this is to pass details to form
   const { name, email } = formData;
 
-  // run this when user clicked sign out
+  // Logout function
   function onLogout() {
     auth.signOut();
-    navigate("/")
+    navigate("/");
+  }
+
+  // Submit changes to Firebase
+  async function onSubmit() {
+    try {
+      if (auth.currentUser.displayName !== name) {
+        // Update Firebase Auth profile
+        await updateProfile(auth.currentUser, { displayName: name });
+      }
+
+      // Update Firestore user document
+      const docRef = doc(db, "users", auth.currentUser.uid); // Ensure `db` is imported
+      await updateDoc(docRef, {
+        name,
+      });
+
+      toast.success("Profile details updated");
+    } catch (error) {
+      toast.error("Could not update profile details");
+    }
   }
 
   return (
     <>
-      <section className="max-w-6xl flex justify-center  flex-col items-center mx-auto">
+      <section className="max-w-6xl flex justify-center flex-col items-center mx-auto">
         <h1 className="text-3xl font-bold text-center mt-10">My Profile</h1>
         <div className="w-full md:w-[50%] mt-7 px-4">
-          <form action="">
-            {/* Name Input*/}
+          <form>
+            {/* Name Input */}
             <input
               type="text"
               id="name"
               value={name}
-              disabled
-              className="w-full text-2xl text-gray-700 px-3 py-2 rounded bg-white border border-gray-300 "
+              disabled={!changeUserDetail}
+              onChange={onChange}
+              className={`w-full text-2xl text-gray-700 px-3 py-2 rounded bg-white border border-gray-300 ${
+                changeUserDetail ? "bg-red-400" : "bg-white"
+              }`}
             />
 
             {/* Email Input */}
@@ -62,18 +89,21 @@ function Profile() {
 
             <div className="flex justify-between mb-10 mt-2 px-2 whitespace-nowrap">
               <p>
-                Do you want to change your name?
-                <span className="text-red-600 mx-2 hover:text-red-900 transition ease-in-out duration-200 cursor-pointer">
-                  Edit
+                Do you want to change your name?{" "}
+                <span
+                  onClick={() => {
+                    if (changeUserDetail) onSubmit();
+                    setChangeUserDetail((prevState) => !prevState);
+                  }}
+                  className="text-red-600 mx-2 hover:text-red-900 transition ease-in-out duration-200 cursor-pointer"
+                >
+                  {changeUserDetail ? "Apply Change" : "Edit"}
                 </span>
               </p>
               <button onClick={onLogout}>
-              <p
-                
-                className="text-blue-600 hover:text-blue-800 transition ease-in-out cursor-pointer"
-              >
-                Sign out
-              </p>
+                <p className="text-blue-600 hover:text-blue-800 transition ease-in-out cursor-pointer">
+                  Sign out
+                </p>
               </button>
             </div>
           </form>
