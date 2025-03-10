@@ -1,8 +1,8 @@
-import { set } from "@cloudinary/url-gen/actions/variable";
+// import { set } from "@cloudinary/url-gen/actions/variable";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-function useAuthStatus() {
+export function useAuthStatus() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(true);
 
@@ -19,4 +19,4 @@ function useAuthStatus() {
   return {loggedIn,checkingStatus}
 }
 
-export default useAuthStatus;
+

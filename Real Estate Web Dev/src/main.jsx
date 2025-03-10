@@ -26,7 +26,6 @@ createRoot(document.getElementById("root")).render(
         <Route path="/profile" element={<PrivateRoute/>}>
           {/* Define child routes */}
           <Route path="/profile" element={<Profile/>} />
-         
         </Route>
 
         <Route path="/offers" element={<Offers />} />
