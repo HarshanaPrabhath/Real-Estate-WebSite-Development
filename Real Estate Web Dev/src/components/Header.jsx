@@ -28,7 +28,7 @@ function Header() {
     }
 
   return ( 
-    <div className='bg-teal-600 shadow-sm sticky top-0 '>
+    <div className='bg-teal-600 shadow-sm sticky top-0 z-40'>
       <header className="flex justify-between items-center px-3 mx-auto max-w-6xl ">
         <div className='text-white cursor-pointer'>
             <p onClick={()=>navigate("/")} className='text-2xl transition-transform duration-300 hover:scale-110 tracking-widest'>LAND BUSINESS</p>
