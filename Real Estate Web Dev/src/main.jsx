@@ -12,7 +12,7 @@ import Offers from "./pages/Offers";
 import Header from "./components/Header.jsx";
 import { ToastContainer } from "react-toastify";
 import PrivateRoute from "./components/PrivateRoute.jsx";
-
+import CreateListing from "./pages/CreateListing.jsx";
 
 createRoot(document.getElementById("root")).render(
   <>
@@ -30,8 +30,10 @@ createRoot(document.getElementById("root")).render(
 
         <Route path="/offers" element={<Offers />} />
         <Route path="/forgetpassword" element={<ForgetPass />} />
+        <Route path="/create-listing" element={<CreateListing/>}/>
       </Routes>
-    </Router>
+    </Router> 
+
     <ToastContainer
       position="bottom-center"
       autoClose={5000}
