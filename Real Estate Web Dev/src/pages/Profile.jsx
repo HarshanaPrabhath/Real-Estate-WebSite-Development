@@ -107,12 +107,15 @@ function Profile() {
                 </p>
               </button>
             </div>
-            <button type="submit" className="flex  text-center w-full bg-blue-500 py-3 px-7 rounded-md justify-center shadow-md hover:bg-blue-800 transition ease-in-out duration-100 hover:shadow-lg">
+            <button
+              type="submit"
+              className="flex  text-center w-full bg-blue-500 py-3 px-7 rounded-md justify-center shadow-md hover:bg-blue-800 transition ease-in-out duration-100 hover:shadow-lg"
+            >
               <Link className="flex items-center" to="/create-listing">
-              <FaHouseUser className="size-6 text-white rounded-full" /> <p className="ml-2.5 text-white">Sell or Rent Your Home</p>
+                <FaHouseUser className="size-6 text-white rounded-full" />{" "}
+                <p className="ml-2.5 text-white">Sell or Rent Your Home</p>
               </Link>
-            
-              </button>
+            </button>
           </form>
         </div>
       </section>
