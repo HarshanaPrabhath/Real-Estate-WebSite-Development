@@ -24,7 +24,6 @@ createRoot(document.getElementById("root")).render(
         <Route path="/signup" element={<SignUp />} />
 
         <Route path="/profile" element={<PrivateRoute />}>
-          {/* Define child routes */}
           <Route path="/profile" element={<Profile />} />
         </Route>
 
@@ -34,6 +33,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/create-listing" element={<PrivateRoute />}>
           <Route path="/create-listing" element={<CreateListing />} />
         </Route>
+
       </Routes>
     </Router>
 
